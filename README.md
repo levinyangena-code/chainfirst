@@ -1,31 +1,19 @@
-from decimal import Decimal
+## What is ChainFirst? (Plain-English version)
 
-import pytest
+Crypto is like digital cash that moves through a giant public ledger anyone can read. If someone steals yours, the thief's moves are visible in that ledger, but it's hard to read without training.
 
-from chainfirst.core import analyze_event, normalize_address, validate_amount
+**ChainFirst is a case file assistant for crypto theft victims.** It helps you:
 
+1. **Know what to do first.** Step-by-step checklists, like the steps you'd take if your wallet were stolen: secure your email, change passwords, contact your exchange through its official site.
+2. **Follow the money.** It reads the public ledger and shows where the stolen funds went, like tracking a package across cities.
+3. **Find the useful stops.** If the money landed at a regulated company such as a crypto exchange, that company may be able to freeze the account. ChainFirst shows who to contact.
+4. **Get your paperwork ready.** It creates a clean, organized report that police, exchanges, and fraud agencies can use, instead of a pile of screenshots.
+5. **Avoid recovery scams.** After a theft, fake "helpers" often offer to get your money back for a fee. ChainFirst warns you about them.
 
-def test_normalize_address_evm_like_value():
-    assert normalize_address(" 0xAbCdEf1234567890ABCDEF1234567890ABCDEF12 ") == "0xabcdef1234567890abcdef1234567890abcdef12"
+### What ChainFirst does NOT do
+- It does **not** recover your money or promise that you'll get it back.
+- It does **not** hold, move, or touch your funds.
+- It will **never** ask for your seed phrase, recovery words, or private keys. If anyone does, it's a scam.
 
-
-def test_normalize_address_rejects_invalid_hex():
-    with pytest.raises(ValueError):
-        normalize_address("0xGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG")
-
-
-def test_validate_amount_rejects_non_positive():
-    with pytest.raises(ValueError):
-        validate_amount("0")
-
-
-def test_analyze_event_is_high_risk_for_large_transfer():
-    summary = analyze_event(
-        source_wallet="0xAbCdEf1234567890ABCDEF1234567890ABCDEF12",
-        destination_wallet="0x1234567890ABCDEF1234567890ABCDEF12345678",
-        amount="25000",
-        suspicious_labels=["rapid-transfer"],
-    )
-    assert summary["is_high_risk"] is True
-    assert summary["risk_score"] >= 70
-    assert summary["source"] == "0xabcdef1234567890abcdef1234567890abcdef12"
+### In one sentence
+ChainFirst helps theft victims act fast, document what happened, and hand the right information to the right people, without ever touching their money.
